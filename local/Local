@@ -1,0 +1,44 @@
+List all local user accounts:
+Get-LocalUser
+
+Get useful info on Computer:
+get-ComputerInfo
+
+Same as above but with less details:
+Get-ComputerInfo CsName,WindowsProductName,CsDomain,CsProcessors,LogonServer,OsVersion,BiosReleaseDate
+
+Download a file from a known URL to C:\temp\ and Rename it:
+Invoke-WebRequest 'https://www.dropbox.com/download?os=win' -OutFile 'c:\temp\DropboxInstaller.exe'
+
+Empty Recycling Bin for C:
+Clear-RecycleBin -force -driveletter C
+
+List Important Computer Information:
+Get-computerinfo
+
+Get printer information:
+Get-Printer
+
+Rename a computer and restart it:
+Rename-Computer -newname DESKTOPNAMEHERE -Restart
+
+Restart the Print Spoolter Service:
+Restart-Service -Name Spooler
+
+Restart a computer or shut it down
+Restart-Computer
+Stop-Computer
+
+Force an immediate restart:
+Restart-Computer -Force
+
+List all processes that contain a specific word.
+get-process | where-object name -like "*word*"
+Replace the text ‘word’ to what you are looking for.
+
+Stop all process that contain a specific work (be careful with this command):
+get-process | where-object name -like "*word*" | stop-process
+Strongly recommend you run the command without the ‘| stop-process’ part first to confirm what will be stopped.
+
+Find all file paths longer than 220 characters in current folder (Use set-location (or ‘cd’) to select the folder first)
+(get-Childitem -Recurse).fullname | Where-Object length -gt 220
