@@ -1,0 +1,20 @@
+# Install the Microsoft.Graph.Intune module if not already installed
+Install-Module -Name Microsoft.Graph.Intune -Force -Scope CurrentUser
+
+# Import the module
+Import-Module Microsoft.Graph.Intune
+
+# Authenticate to Microsoft Graph
+Connect-MSGraph -Scopes "DeviceManagementManagedDevices.ReadWrite.All"
+
+# Get all devices managed by Intune
+$devices = Get-IntuneManagedDevice
+
+foreach ($device in $devices) {
+    # Rotate BitLocker keys for each device
+    Invoke-IntuneManagedDeviceRotateBitLockerKeys -managedDeviceId $device.id
+    Write-Output "Rotated BitLocker key for device: $($device.deviceName)"
+}
+
+# Disconnect from Microsoft Graph
+Disconnect-MSGraph
