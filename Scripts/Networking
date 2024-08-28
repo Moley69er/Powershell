@@ -1,0 +1,15 @@
+Test basic connectivity to a device or the internet
+Test-connection google.com
+Test-connection 10.1.1.1
+
+Clear DNS Cache
+Clear-DnsClientCache
+
+Check if domain computers domain trust is working, and repair it.
+Test-ComputerSecureChannel
+
+Repair domain computers domain trust.
+Test-ComputerSecureChannel -Repair
+
+Check if an outbound port is open
+Test-NetConnection -Port 80
