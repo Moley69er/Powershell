@@ -1,0 +1,6 @@
+#basic email creation
+connect-exchangeonline
+
+new-distributionGroup -name DiversityCommitteeNT -Members Erin.williams@shape.com.au, Ashley.petrilli@shape.com.au, Keeta.welch@shape.com.au -PrimarySmtpAddress Diversitycommittee@shape.com.au
+Update-DistributionGroupMember mitchtest1 -Members mitchell.woodward@shape.com.au, master.yoda@shape.com.au
+set-distributiongroup -ident diversitycommittee@shape.com.au -DisplayName 'Diversity Committee NT'
