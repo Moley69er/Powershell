@@ -1,0 +1,22 @@
+You can combine multiple PowerShell commands to format the output or place it in a file (or your clipboard).
+Add the following to any PowerShell command with an text output to save even more time:
+
+Put the output into the clipboard
+| Clip
+E.g. get-printer | clip
+This will mean you don’t need to highlight and copy the output, PowerShell will put it straight into your clipboard.
+
+Format the output as a List or a table
+| Format-List
+| Format-Table
+e.g. Get-Printers | Format-List
+This will change how the output is formatted, most commands will show either a list or a table, you can use this to reformat it.
+
+Save output to a file
+| Out-FIle C:\temp\PowershellOutput.txt
+e.g. Get-Service | Out-FIle C:\temp\PowershellOutput.txt
+Will save the output to a file.
+
+View the Output in filterable and sortable list
+| Out-Gridview
+e.g. Get-Service | Out-Gridview
