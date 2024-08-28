@@ -1,0 +1,20 @@
+# Import the Active Directory module
+Import-Module ActiveDirectory
+
+# Define the computer name
+$computerName = "ComputerName"
+
+# Get the BitLocker recovery key from Active Directory
+$bitlockerKey = Get-ADObject -Filter "objectClass -eq 'msFVE-RecoveryInformation' -and msFVE-RecoveryPassword -like '*'" -SearchBase "CN=$computerName,OU=Computers,DC=YourDomain,DC=com" -Property msFVE-RecoveryPassword | Select-Object -ExpandProperty msFVE-RecoveryPassword
+
+# Output the BitLocker recovery key
+if ($bitlockerKey) {
+    Write-Output "BitLocker Recovery Key for $computerName: $bitlockerKey"
+} else {
+    Write-Output "No BitLocker Recovery Key found for $computerName"
+}
+```
+
+Replace `"ComputerName"` with the name of the computer you want to query and `"OU=Computers,DC=YourDomain,DC=com"` with the appropriate search base for your Active Directory environment.
+
+Make sure you have the necessary permissions to access the BitLocker recovery information in Active Directory.
