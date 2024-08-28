@@ -1,0 +1,5 @@
+Find reason for unexpected shutdown on a server
+Get-EventLog -LogName system -Source user32 | Select-Object TimeGenerated, Message | Sort-Object message
+
+Get the last 100 events in the system log
+Get-EventLog -LogName system -Newest 100
