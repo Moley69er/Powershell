@@ -1,0 +1,25 @@
+#Check to See if a users account is expired or locked out:
+Search-ADAccount -PasswordExpired
+Search-ADAccount -LockedOut
+#The above will quickly list all account that have passwords expired or locked out, so you can quickly know if that’s t
+he issue or not
+
+#unlock an Account:
+Unlock-ADaccount -identity "USERNAME"
+#Replace username with the username of the account you are targeting.
+
+#Unlock multiple accounts:
+search-adaccount -lockedout | out-gridview -passthru | unlock-adaccount
+#This will display all locked out accounts in a nice list, you can then apply a filter and any remaining accounts will be unlocked once you press ok.
+
+#Reset a Password:
+Set-ADAccountPassword USERNAME -NewPassword (Read-Host "Enter the new password" -AsSecureString) –Reset
+#Reset a password and force user to set a new one on next login, this will prompt you for the password, replace USERNAME with the user you want to target. Remove the -reset if you don’t want to force the user to change the password on their next logon.
+
+#Sync Account changes in Active Directory with Azure AD :
+Start-ADSyncSyncCycle -PolicyType Delta
+#Sick of waiting for a password change or newly created account to sync up with your Microsoft 365 tenancy. Run this to start the sync straight away instead of the usual once every 30 minutes delay.
+
+#Add a user to a Active Directory Group:
+Add-ADGroupMember -Identity 'GROUPNAME' -Members 'USERNAME','USERNAME2'
+#Replace Groupname and Usernames, you can add extra users by adding a comma and then listing multiple users.
