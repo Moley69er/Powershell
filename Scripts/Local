@@ -1,3 +1,7 @@
+*computer name bios and serial
+wmic computersystem get name && Get-WmiObject win32_bios
+Name
+
 List all local user accounts:
 Get-LocalUser
 
