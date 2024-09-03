@@ -58,3 +58,78 @@ $FilteredTable = $MergedTable | Where-Object { $_.File -ne "In Both Files" }
 # Export the filtered table to a new Excel file
 $ExportFile = "C:\ExportFile.xlsx"
 $FilteredTable | Export-Excel -Path $ExportFile -AutoSize -AutoFilter
+
+
+#alternative 
+
+# Define the paths to the CSV files
+$csvFile1 = "path\to\your\first\file.csv"
+$csvFile2 = "path\to\your\second\file.csv"
+
+# Import the CSV files
+$data1 = Import-Csv -Path $csvFile1
+$data2 = Import-Csv -Path $csvFile2
+
+# Define the columns to compare
+$column1 = "ColumnName1"
+$column2 = "ColumnName2"
+
+# Compare the CSV files
+$changes = @()
+foreach ($row1 in $data1) {
+    $row2 = $data2 | Where-Object { $_.ID -eq $row1.ID }
+    if ($row2) {
+        if ($row1.$column1 -ne $row2.$column1 -or $row1.$column2 -ne $row2.$column2) {
+            $changes += [PSCustomObject]@{
+                ID = $row1.ID
+                OldValue1 = $row1.$column1
+                NewValue1 = $row2.$column1
+                OldValue2 = $row1.$column2
+                NewValue2 = $row2.$column2
+            }
+        }
+    }
+}
+
+# Output the changes
+$changes | Format-Table -AutoSize
+
+This script assumes that both CSV files have a common column (like an ID) to match rows. It compares the specified columns (ColumnName1 and ColumnName2) and outputs the differences.
+
+Feel free to adjust the column names and paths to your actual CSV files. If you need any further customization, just let me know!
+
+
+#alternative using the import-excel Module
+
+# Define the paths to the CSV files
+$csvFile1 = "path\to\your\first\file.csv"
+$csvFile2 = "path\to\your\second\file.csv"
+
+# Import the CSV files using ImportExcel
+$data1 = Import-Excel -Path $csvFile1
+$data2 = Import-Excel -Path $csvFile2
+
+# Define the columns to compare
+$column1 = "ColumnName1"
+$column2 = "ColumnName2"
+
+# Compare the CSV files
+$changes = @()
+foreach ($row1 in $data1) {
+    $row2 = $data2 | Where-Object { $_.ID -eq $row1.ID }
+    if ($row2) {
+        if ($row1.$column1 -ne $row2.$column1 -or $row1.$column2 -ne $row2.$column2) {
+            $changes += [PSCustomObject]@{
+                ID = $row1.ID
+                OldValue1 = $row1.$column1
+                NewValue1 = $row2.$column1
+                OldValue2 = $row1.$column2
+                NewValue2 = $row2.$column2
+            }
+        }
+    }
+}
+
+# Output the changes
+$changes | Export-Excel -Path "path\to\output\changes.xlsx" -AutoSize
+
