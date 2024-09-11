@@ -1,3 +1,6 @@
+#get a list of users and emails via AD
+Get-ADUser -Filter "Office -like '*Economy' -and Title -like '*Title'" -SearchBase "OU=Normal Users,OU=User Accounts,DC=your,DC=domain,DC=com" | select Name, SamAccountName
+
 #Check to See if a users account is expired or locked out:
 Search-ADAccount -PasswordExpired
 Search-ADAccount -LockedOut
