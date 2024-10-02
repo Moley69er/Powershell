@@ -1,0 +1,31 @@
+# Define the paths to the CSV files
+$csvBluebeam = "C:\Users\Mitchell.Woodward\OneDrive - Shape Australia\Baggage\export_users_2024-09-11.xlsx"
+$csvSDP = "C:\Users\Mitchell.Woodward\OneDrive - Shape Australia\Baggage\Bluebeam_License_Breakdown ( Sep 11, 2024 10_32 AM ).xlsx"
+
+# Import the CSV files using ImportExcel
+$data1 = Import-Excel -Path $csvBluebeam
+$data2 = Import-Excel -Path $csvSDP
+
+# Define the columns to compare
+$column1 = "User email"
+$column2 = "email address"
+
+# Compare the CSV files
+$changes = @()
+foreach ($row1 in $data1) {
+    $row2 = $data2 | Where-Object { $_.ID -eq $row1.ID }
+    if ($row2) {
+        if ($row1.$column1 -ne $row2.$column1 -or $row1.$column2 -ne $row2.$column2) {
+            $changes += [PSCustomObject]@{
+                ID = $row1.ID
+                OldValue1 = $row1.$column1
+                NewValue1 = $row2.$column1
+                OldValue2 = $row1.$column2
+                NewValue2 = $row2.$column2
+            }
+        }
+    }
+}
+
+# Output the changes
+$changes | Export-Excel -Path "C:\Users\Mitchell.Woodward\OneDrive - Shape Australia\Baggage\output.xlsx" -AutoSize
